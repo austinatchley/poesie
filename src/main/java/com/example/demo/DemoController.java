@@ -20,36 +20,36 @@ import org.springframework.ai.prompt.PromptTemplate;
 @RequiredArgsConstructor
 public class DemoController {
     private final OpenAiChatClient aiClient;
+    private final BeanOutputParser<GeneratedPoem> parser = new BeanOutputParser<>(GeneratedPoem.class);
 
     @GetMapping("/{topic}")
-    public TopSong getMethodName(@PathVariable String topic) {
+    public GeneratedPoem getMethodName(@PathVariable String topic) {
         log.info("GET /demo/{}", topic);
 
-        BeanOutputParser<TopSong> parser = new BeanOutputParser<>(TopSong.class);
-        Prompt prompt = generatePrompt(topic, parser);
-        return sendRequest(prompt, parser);
+        Prompt prompt = generatePrompt(topic);
+        return sendRequest(prompt);
     }
 
-    private Prompt generatePrompt(final String topic, final BeanOutputParser<TopSong> parser) {
+    private Prompt generatePrompt(final String topic) {
         PromptTemplate template = new PromptTemplate(
             """
             Write a short story composed of a haiku, a paragraph of text, and another haiku. The story theme is {topic}
             {format}
             """);
         template.add("topic", topic);
-        template.add("format", parser.getFormat());
-        template.setOutputParser(parser);
+        template.add("format", this.parser.getFormat());
+        template.setOutputParser(this.parser);
 
         return template.create();
     }
 
-    private TopSong sendRequest(final Prompt prompt, final BeanOutputParser<TopSong> parser) {
+    private GeneratedPoem sendRequest(final Prompt prompt) {
         log.info("Sending OpenAI request with prompt: {}", prompt);
         ChatResponse response = aiClient.generate(prompt);
         String text = response.getGeneration().getContent();
 
         log.info("OpenAI response: {}", response);
-        return parser.parse(text);
+        return this.parser.parse(text);
     }
 
 }
