@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ai.openai.OpenAiChatClient;
 
+@Log4j2
 @RestController
 @RequestMapping("/demo")
-@Log4j2
 @RequiredArgsConstructor
 public class DemoController {
     private final OpenAiChatClient aiClient;
