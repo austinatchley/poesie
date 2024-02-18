@@ -1,4 +1,4 @@
-package com.example.demo;
+package xyz.austinatchley.poesie;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
