@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ai.chat.ChatResponse;
 import org.springframework.ai.openai.OpenAiChatClient;
 import org.springframework.ai.parser.BeanOutputParser;
-import org.springframework.ai.prompt.Prompt;
-import org.springframework.ai.prompt.PromptTemplate;
+import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.chat.prompt.PromptTemplate;
 
 @Log4j2
 @RestController
@@ -45,8 +45,8 @@ public class DemoController {
 
     private GeneratedPoem sendRequest(final Prompt prompt) {
         log.info("Sending OpenAI request with prompt: {}", prompt);
-        ChatResponse response = aiClient.generate(prompt);
-        String text = response.getGeneration().getContent();
+        ChatResponse response = aiClient.call(prompt);
+        String text = response.getResult().getOutput().getContent();
 
         log.info("OpenAI response: {}", response);
         return this.parser.parse(text);
