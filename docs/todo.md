@@ -4,6 +4,8 @@
 * Finalize parameters sent to the OpenAI API
 * Create static/simple frontend for displaying our API results
     * htmx?
+* Host static frontend in S3 or something similar
+* Write script to automate deployments for frontend
 
 ## Done
 
