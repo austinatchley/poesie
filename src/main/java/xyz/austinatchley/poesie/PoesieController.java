@@ -38,7 +38,7 @@ public class PoesieController {
     public MultimediaEntity generateMultimediaResponse(@RequestParam String topic) {
         log.info("GET /generate?topic={}", topic);
         PoemEntity poemEntity = chatClient.generatePoemResponse(topic);
-        ImageEntity imageEntity = imageClient.generateImageResponse(topic, poemEntity.firstHaiku());
+        ImageEntity imageEntity = imageClient.generateImageResponse(topic, poemEntity.prose());
 
         return MultimediaEntity.builder()
                 .chatResponse(poemEntity.toString())
