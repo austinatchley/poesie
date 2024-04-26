@@ -8,8 +8,7 @@ import lombok.NonNull;
 @Builder
 public record PoemEntity(
         @NonNull String title,
-        @NonNull String firstHaiku,
+        @NonNull String haiku,
         @NonNull String prose,
-        @NonNull String secondHaiku,
-        @NonNull List<String> themes) {
+        @NonNull List<String> illustrationPrompts) {
 }

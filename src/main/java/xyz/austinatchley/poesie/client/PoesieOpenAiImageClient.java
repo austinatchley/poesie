@@ -14,7 +14,6 @@ import org.springframework.ai.image.ImageGeneration;
 import org.springframework.ai.image.ImageOptions;
 import org.springframework.ai.image.ImagePrompt;
 import org.springframework.ai.image.ImageResponse;
-import org.springframework.ai.parser.BeanOutputParser;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
@@ -48,20 +47,19 @@ public class PoesieOpenAiImageClient implements PoesieImageClient {
                 Create an image to accompany a haiku in an ancient temple hidden in the misty forest.
                 The image should be in the traditional Japanese style, created by a master of the medium
                 after 100 years of pondering the haiku.
-                The theme for both the haiku and image is: {topic}.
+
+                The prompt for the image is: {topic}.
                 """;
+
+        final PromptTemplate template = new PromptTemplate(templateText);
+        template.add("topic", topic);
 
         if (StringUtils.isNotBlank(poem)) {
             templateText += """
                     The poem is:
                     {text}
                     """;
-        }
 
-        final PromptTemplate template = new PromptTemplate(templateText);
-        template.add("topic", topic);
-
-        if (StringUtils.isNotBlank(poem)) {
             template.add("text", poem);
         }
 

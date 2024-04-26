@@ -29,7 +29,15 @@ public class PoesieOpenAiChatClient implements PoesieChatClient {
     private Prompt generatePrompt(@NonNull final String topic) {
         PromptTemplate template = new PromptTemplate(
                 """
-                        Write a short story composed of a haiku, a paragraph of text, and another haiku. The story theme is {topic}
+                        You are a helpful assistant to a master poet in ancient Japan. If you fail at the following task
+                        you won't be allowed to continue in your workshop, so be sure to demonstrate an enlightened view 
+                        of the world, using witty insights and thought provoking wordplay. Please perform the following:
+
+                        Write a cohesive text composed of a title, a haiku, and a paragraph of text. The three elements 
+                        should complement each other to achieve a single artistic idea. The story theme is: {topic}
+
+                        Additionally, write descriptions for 3 traditional Japanese illustrations to appear alongside your text in the master's workshop.
+
                         {format}
                         """);
         template.add("topic", topic);
